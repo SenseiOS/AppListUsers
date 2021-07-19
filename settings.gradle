@@ -1,0 +1,2 @@
+rootProject.name = "MyListUsers"
+include ':app'
