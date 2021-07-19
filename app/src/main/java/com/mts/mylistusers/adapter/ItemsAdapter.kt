@@ -1,6 +1,7 @@
 package com.mts.mylistusers.adapter
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,7 @@ import com.mts.mylistusers.MainActivity
 import com.mts.mylistusers.R
 import com.mts.mylistusers.model.Item
 
-class ItemsAdapter(private val mItems:List<Item>):RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
+class ItemsAdapter(private val mItems:List<Item>, private val mPreference:SharedPreferences):RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item,parent,false)
@@ -21,7 +22,7 @@ class ItemsAdapter(private val mItems:List<Item>):RecyclerView.Adapter<ItemsAdap
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        val item: Item = mItems.get(position)
+        val item: Item = mItems[position]
         val textView = viewHolder.nameTextView
         textView.text = item.name
 
@@ -34,6 +35,9 @@ class ItemsAdapter(private val mItems:List<Item>):RecyclerView.Adapter<ItemsAdap
                 infoIntent.putExtra("id", item.id)
                 infoIntent.putExtra("name", item.name)
                 infoIntent.putExtra("description", item.description)
+
+                val editor = mPreference.edit()
+                editor.putInt("Saved last id",item.id).apply()
 
                 activity.startActivity(infoIntent)
             }
