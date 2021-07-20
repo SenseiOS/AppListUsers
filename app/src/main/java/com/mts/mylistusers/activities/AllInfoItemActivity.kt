@@ -20,7 +20,7 @@ class AllInfoItemActivity : AppCompatActivity() {
         descriptionTextView.text = intent.getStringExtra ("description")
     }
 
-    fun closeActivity(view: View) {
+    /*fun closeActivity(view: View) {
         finish()
-    }
+    }*/
 }

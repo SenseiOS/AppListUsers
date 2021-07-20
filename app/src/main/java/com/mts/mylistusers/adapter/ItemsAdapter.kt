@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.mts.mylistusers.activities.AllInfoItemActivity
+import com.mts.mylistusers.activities.MainActivity
 import com.mts.mylistusers.R
 import com.mts.mylistusers.model.Item
 
@@ -47,6 +48,6 @@ class ItemsAdapter(private val items:List<Item>, private val preference:SharedPr
     }
 
     inner class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
-        val nameTextView: TextView =itemView.findViewById<TextView>(R.id.txt_name)
+        val nameTextView=itemView.findViewById<TextView>(R.id.txt_name)
     }
 }
