@@ -1,10 +1,10 @@
-package com.mts.mylistusers
+package com.mts.mylistusers.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
+import com.mts.mylistusers.R
 
 class AllInfoItemActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
