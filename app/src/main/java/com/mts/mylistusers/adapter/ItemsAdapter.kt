@@ -7,47 +7,45 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mts.mylistusers.activities.AllInfoItemActivity
 import com.mts.mylistusers.activities.MainActivity
 import com.mts.mylistusers.R
 import com.mts.mylistusers.model.Item
+import com.mts.mylistusers.model.Items
 
-class ItemsAdapter(private val items:List<Item>, private val preference:SharedPreferences):RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
+class ItemsAdapter(val clickListener: (Item)-> Unit):ListAdapter<Item,ItemsAdapter.MyViewHolder>(DiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item,parent,false)
-        return ViewHolder(itemView)
+        return MyViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item: Item = items[position]
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        val item: Item = currentList[position]
         val textView = holder.nameTextView
         textView.text = item.name
 
-        holder.itemView.setOnClickListener(object:View.OnClickListener{
-
-            override fun onClick(v: View?) {
-                val activity = v!!.context as AppCompatActivity
-                val infoIntent = Intent(activity, AllInfoItemActivity::class.java)
-
-                infoIntent.putExtra("id", item.id)
-                infoIntent.putExtra("name", item.name)
-                infoIntent.putExtra("description", item.description)
-
-                val editor = preference.edit()
-                editor.putInt("Saved last id",item.id).apply()
-
-                activity.startActivity(infoIntent)
-            }
-        })
+        holder.itemView.setOnClickListener {v ->
+            clickListener(item)
+        }
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
-
-    inner class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
+    class MyViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
         val nameTextView=itemView.findViewById<TextView>(R.id.txt_name)
     }
+
+    class DiffCallback: DiffUtil.ItemCallback<Item>() {
+        override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
+            return oldItem == newItem
+        }
+
+    }
+
 }

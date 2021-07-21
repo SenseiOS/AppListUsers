@@ -6,6 +6,7 @@ import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -23,23 +24,35 @@ import com.mts.mylistusers.services.ForegroundService
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var lastIdTextView:TextView
+    private val NAME_SAVE_PREFERENCE = "Saved last id"
+    private val PUT_ID_NAME = "id"
+    private val NAME_PREFERENCES = "lastId"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Preferences.preferences=getSharedPreferences("lastId", Context.MODE_PRIVATE)
+        Preferences.preferences=getSharedPreferences(NAME_PREFERENCES, Context.MODE_PRIVATE)
+
         val rvItems = findViewById<View>(R.id.rvItems) as RecyclerView
 
-        Items.items = Item.createItemsList()
+        val adapter = ItemsAdapter {
+            val infoIntent = Intent(this, AllInfoItemActivity::class.java)
 
-        val adapter = ItemsAdapter(Items.items,Preferences.preferences)
-        rvItems.adapter=adapter
+            infoIntent.putExtra(PUT_ID_NAME, it.id)
+
+            val editor = Preferences.preferences.edit()
+            editor.putInt(NAME_SAVE_PREFERENCE, it.id).apply()
+
+            this.startActivity(infoIntent)
+        }
+
         rvItems.layoutManager=LinearLayoutManager(this)
+        rvItems.adapter=adapter
+        adapter.submitList(Items.items)
 
         val startServiceIntent = Intent(baseContext,ForegroundService::class.java)
-        ContextCompat.startForegroundService(baseContext, startServiceIntent!!)
+        ContextCompat.startForegroundService(baseContext, startServiceIntent)
     }
 
 

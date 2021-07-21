@@ -12,22 +12,21 @@ import com.mts.mylistusers.model.Preferences
 
 class MyReceiver : BroadcastReceiver() {
 
+    private val SAVED_NAME_ID = "Saved last id"
+    private val PUT_ID_NAME = "id"
+    private val DEFAULT_NUNMBER_ID = 0
 
     override fun onReceive(context: Context, intent: Intent) {
 
-        var lastId:Int
-
-        if(Preferences.preferences.contains("Saved last id")){
-             lastId = Preferences.preferences.getInt("Saved last id",0)
+        val lastId:Int= if(Preferences.preferences.contains(SAVED_NAME_ID)){
+             Preferences.preferences.getInt(SAVED_NAME_ID,DEFAULT_NUNMBER_ID)
         }
         else{
-            lastId = 0
+            DEFAULT_NUNMBER_ID
         }
 
         val resultIntent = Intent(context, AllInfoItemActivity::class.java)
-        resultIntent.putExtra("id", lastId)
-        resultIntent.putExtra("name", Items.items[lastId].name )
-        resultIntent.putExtra("description", Items.items[lastId].description)
+        resultIntent.putExtra(PUT_ID_NAME, lastId)
 
         val stackBuilder: TaskStackBuilder = TaskStackBuilder.create(context)
         stackBuilder.addParentStack(AllInfoItemActivity::class.java)
