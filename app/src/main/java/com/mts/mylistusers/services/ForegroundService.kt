@@ -2,21 +2,18 @@ package com.mts.mylistusers.services
 
 import android.app.*
 import android.content.Intent
-import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import com.mts.mylistusers.R
-import com.mts.mylistusers.activities.MainActivity
-import com.mts.mylistusers.receivers.MyReceiver
+
+private const val CHANNEL_ID = "ForegroundService"
+private const val NAME_CTION = "com.example.broadcast.MY_NOTIFICATION"
+private const val NAME_PACKAGE = "com.mts.mylistusers"
+private const val NOTIFICATION_TITLE = "Kotlin service"
+private const val NOTIFICATION_TEXT = "Open last info user"
+private const val NOTIFICATION_ID = 1
 
 class ForegroundService: Service() {
-
-    private val CHANNEL_ID = "ForegroundService"
-    private val NAME_CTION = "com.example.broadcast.MY_NOTIFICATION"
-    private val NAME_PACKAGE = "com.mts.mylistusers"
-    private val NOTIFICATION_TITLE = "Kotlin service"
-    private val NOTIFICATION_TEXT = "Open last info user"
-    private val NOTIFICATION_ID = 1
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent != null) {

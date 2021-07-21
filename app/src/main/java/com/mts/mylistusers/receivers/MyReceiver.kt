@@ -9,20 +9,19 @@ import com.mts.mylistusers.activities.AllInfoItemActivity
 import com.mts.mylistusers.model.Items
 import com.mts.mylistusers.model.Preferences
 
+private const val SAVED_NAME_ID = "Saved last id"
+private const val PUT_ID_NAME = "id"
+private const val DEFAULT_NUMBER_ID = 0
 
 class MyReceiver : BroadcastReceiver() {
-
-    private val SAVED_NAME_ID = "Saved last id"
-    private val PUT_ID_NAME = "id"
-    private val DEFAULT_NUNMBER_ID = 0
 
     override fun onReceive(context: Context, intent: Intent) {
 
         val lastId:Int= if(Preferences.preferences.contains(SAVED_NAME_ID)){
-             Preferences.preferences.getInt(SAVED_NAME_ID,DEFAULT_NUNMBER_ID)
+             Preferences.preferences.getInt(SAVED_NAME_ID,DEFAULT_NUMBER_ID)
         }
         else{
-            DEFAULT_NUNMBER_ID
+            DEFAULT_NUMBER_ID
         }
 
         val resultIntent = Intent(context, AllInfoItemActivity::class.java)

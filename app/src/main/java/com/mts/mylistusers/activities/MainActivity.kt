@@ -21,12 +21,11 @@ import com.mts.mylistusers.model.Preferences
 import com.mts.mylistusers.receivers.MyReceiver
 import com.mts.mylistusers.services.ForegroundService
 
+private const val NAME_SAVE_PREFERENCE = "Saved last id"
+private const val PUT_ID_NAME = "id"
+private const val NAME_PREFERENCES = "lastId"
 
 class MainActivity : AppCompatActivity() {
-
-    private val NAME_SAVE_PREFERENCE = "Saved last id"
-    private val PUT_ID_NAME = "id"
-    private val NAME_PREFERENCES = "lastId"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
