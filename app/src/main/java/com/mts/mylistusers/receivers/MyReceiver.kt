@@ -6,24 +6,28 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.mts.mylistusers.activities.AllInfoItemActivity
+import com.mts.mylistusers.model.Items
+import com.mts.mylistusers.model.Preferences
 
 
 class MyReceiver : BroadcastReceiver() {
 
+
     override fun onReceive(context: Context, intent: Intent) {
-        /*val infoIntent = Intent(context, AllInfoItemActivity::class.java)
 
-        infoIntent.putExtra("id", intent.getIntExtra("id",0))
-        infoIntent.putExtra("name", intent.getStringExtra("name"))
-        infoIntent.putExtra("description", intent.getStringExtra ("description"))
+        var lastId:Int
 
-        context.startActivity(infoIntent)*/
+        if(Preferences.preferences.contains("Saved last id")){
+             lastId = Preferences.preferences.getInt("Saved last id",0)
+        }
+        else{
+            lastId = 0
+        }
 
-        // Create PendingIntent
         val resultIntent = Intent(context, AllInfoItemActivity::class.java)
-        resultIntent.putExtra("lastId", intent.getIntExtra("id",0))
-        resultIntent.putExtra("lastName", intent.getStringExtra("name"))
-        resultIntent.putExtra("lastDescription", intent.getStringExtra ("description"))
+        resultIntent.putExtra("id", lastId)
+        resultIntent.putExtra("name", Items.items[lastId].name )
+        resultIntent.putExtra("description", Items.items[lastId].description)
 
         val stackBuilder: TaskStackBuilder = TaskStackBuilder.create(context)
         stackBuilder.addParentStack(AllInfoItemActivity::class.java)

@@ -17,9 +17,6 @@ class ForegroundService: Service() {
 
             val notificationIntent = Intent().also { nIntent ->
                 nIntent.action = "com.example.broadcast.MY_NOTIFICATION"
-                nIntent.putExtra("lastId", intent.getIntExtra("lastId", 0))
-                nIntent.putExtra("lastName", intent.getStringExtra ("lastName"))
-                nIntent.putExtra("lastDescription",intent.getStringExtra ("lastDescription"))
                 nIntent.`package` = "com.mts.mylistusers"
             }
 
