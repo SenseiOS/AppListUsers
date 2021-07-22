@@ -3,27 +3,44 @@ package com.mts.mylistusers.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import com.mts.mylistusers.R
-import com.mts.mylistusers.model.Items
+import com.mts.mylistusers.*
+import com.mts.mylistusers.interfaces.AllInfoItemView
+import com.mts.mylistusers.model.Item
+import com.mts.mylistusers.presenter.AllInfoItemPresenter
 
-private const val DEFAULT_NUMBER_ID = 0
-private const val GET_NAME_ID = "id"
 
-class AllInfoItemActivity : AppCompatActivity() {
+class AllInfoItemActivity : AppCompatActivity(), AllInfoItemView {
+
+    private lateinit var idTextView:TextView
+    private lateinit var nameTextView:TextView
+    private lateinit var descriptionTextView:TextView
+
+    private val presenter by lazy {
+        AllInfoItemPresenter()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.all_info_item)
 
-        val idTextView = findViewById<TextView>(R.id.info_id)
-        val nameTextView = findViewById<TextView>(R.id.info_name)
-        val descriptionTextView = findViewById<TextView>(R.id.info_description)
+        idTextView = findViewById(R.id.info_id)
+        nameTextView = findViewById(R.id.info_name)
+        descriptionTextView = findViewById(R.id.info_description)
 
-        Items.getItem(intent.getIntExtra(GET_NAME_ID,DEFAULT_NUMBER_ID))?.also { resItem->
-            idTextView.text = resItem.id.toString()
-            nameTextView.text = resItem.name
-            descriptionTextView.text = resItem.description
-        }
+        presenter.attachView(this)
+
+        presenter.getItem(intent)
+    }
+
+    override fun displayInfo(item: Item) {
+        idTextView.text = item.id.toString()
+        nameTextView.text = item.name
+        descriptionTextView.text = item.description
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.detachView()
     }
 
 }
