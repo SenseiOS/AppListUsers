@@ -32,15 +32,16 @@ class AllInfoItemActivity : AppCompatActivity(), AllInfoItemView {
         presenter.getItem(intent)
     }
 
-    override fun displayInfo(item: Item) {
-        idTextView.text = item.id.toString()
-        nameTextView.text = item.name
-        descriptionTextView.text = item.description
-    }
 
     override fun onDestroy() {
         super.onDestroy()
         presenter.detachView()
+    }
+
+    override fun displayInfo(item: Item) {
+        idTextView.text = item.id.toString()
+        nameTextView.text = item.name
+        descriptionTextView.text = item.description
     }
 
 }

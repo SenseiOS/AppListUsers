@@ -17,7 +17,6 @@ import com.mts.mylistusers.model.Preferences
 import com.mts.mylistusers.services.ForegroundService
 
 private const val PUT_ID_NAME = "id"
-private const val NAME_PREFERENCES = "lastId"
 
 class MainActivity : AppCompatActivity(), MainView {
 
@@ -30,9 +29,9 @@ class MainActivity : AppCompatActivity(), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //!!! not this (presenter)
-        Preferences.preferences = getSharedPreferences(NAME_PREFERENCES, Context.MODE_PRIVATE)
+
         presenter.attachView(this)
+
         startApplication()
     }
 
