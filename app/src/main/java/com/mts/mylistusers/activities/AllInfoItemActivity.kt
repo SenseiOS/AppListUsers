@@ -6,8 +6,11 @@ import android.widget.TextView
 import com.mts.mylistusers.*
 import com.mts.mylistusers.interfaces.AllInfoItemView
 import com.mts.mylistusers.model.Item
-import com.mts.mylistusers.presenter.AllInfoItemPresenter
+import com.mts.mylistusers.presenters.AllInfoItemPresenter
 
+
+private const val DEFAULT_NUMBER_ID = 0
+private const val GET_NAME_ID = "id"
 
 class AllInfoItemActivity : AppCompatActivity(), AllInfoItemView {
 
@@ -29,7 +32,7 @@ class AllInfoItemActivity : AppCompatActivity(), AllInfoItemView {
 
         presenter.attachView(this)
 
-        presenter.getItem(intent)
+        presenter.getItem(intent.getIntExtra(GET_NAME_ID, DEFAULT_NUMBER_ID))
     }
 
 

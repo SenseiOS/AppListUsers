@@ -1,11 +1,7 @@
-package com.mts.mylistusers.presenter
+package com.mts.mylistusers.presenters
 
-import android.content.Intent
 import com.mts.mylistusers.interfaces.AllInfoItemView
 import com.mts.mylistusers.model.Items
-
-private const val DEFAULT_NUMBER_ID = 0
-private const val GET_NAME_ID = "id"
 
 class AllInfoItemPresenter() {
 
@@ -19,8 +15,8 @@ class AllInfoItemPresenter() {
         view = null
     }
 
-    fun getItem(intent: Intent) {
-        Items.getItem(intent.getIntExtra(GET_NAME_ID, DEFAULT_NUMBER_ID))?.let {
+    fun getItem(id:Int) {
+        Items.getItem(id)?.let {
             view?.displayInfo(
                 it
             )
