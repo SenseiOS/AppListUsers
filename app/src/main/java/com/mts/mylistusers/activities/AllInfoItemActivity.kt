@@ -3,21 +3,21 @@ package com.mts.mylistusers.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import androidx.lifecycle.Observer
 import com.mts.mylistusers.*
-import com.mts.mylistusers.interfaces.AllInfoItemView
 import com.mts.mylistusers.model.Item
-import com.mts.mylistusers.presenter.AllInfoItemPresenter
+import com.mts.mylistusers.viewModels.AllInfoItemViewModel
 
 
-class AllInfoItemActivity : AppCompatActivity(), AllInfoItemView {
+private const val DEFAULT_NUMBER_ID = 0
+private const val GET_NAME_ID = "id"
+
+class AllInfoItemActivity : AppCompatActivity() {
 
     private lateinit var idTextView:TextView
     private lateinit var nameTextView:TextView
     private lateinit var descriptionTextView:TextView
 
-    private val presenter by lazy {
-        AllInfoItemPresenter()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,18 +27,14 @@ class AllInfoItemActivity : AppCompatActivity(), AllInfoItemView {
         nameTextView = findViewById(R.id.info_name)
         descriptionTextView = findViewById(R.id.info_description)
 
-        presenter.attachView(this)
+        val viewModel = AllInfoItemViewModel()
 
-        presenter.getItem(intent)
+        viewModel.item.observe(this, Observer { displayInfo(it) })
+        viewModel.getItem(intent.getIntExtra(GET_NAME_ID, DEFAULT_NUMBER_ID))
+
     }
 
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.detachView()
-    }
-
-    override fun displayInfo(item: Item) {
+    private fun displayInfo(item: Item) {
         idTextView.text = item.id.toString()
         nameTextView.text = item.name
         descriptionTextView.text = item.description

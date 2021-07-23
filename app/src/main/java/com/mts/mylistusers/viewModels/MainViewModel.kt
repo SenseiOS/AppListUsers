@@ -1,7 +1,7 @@
-package com.mts.mylistusers.viewModel
+package com.mts.mylistusers.viewModels
 
-import android.content.SharedPreferences
 import androidx.core.content.edit
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mts.mylistusers.model.Item
 import com.mts.mylistusers.model.Items
@@ -12,8 +12,15 @@ private const val NAME_SAVE_PREFERENCE = "Saved last id"
 
 class MainViewModel:ViewModel() {
 
-    var items = Items.items
+    val liveItems = MutableLiveData<ArrayList<Item>>()
 
+    init {
+        getItems()
+    }
+
+    private fun getItems(){
+        liveItems.value = Items.items
+    }
 
     fun saveItemId(id: Int) {
         Preferences.preferences.edit {
