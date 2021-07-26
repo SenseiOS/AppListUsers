@@ -12,8 +12,8 @@ object Items {
         }
         return items
     }
-    fun getItem(lastId:Int): Item? {
-       return items.find { it.id == lastId}
+    fun getItem(lastId:Int): Item {
+       return items.find { it.id == lastId}!!
     }
 
 }

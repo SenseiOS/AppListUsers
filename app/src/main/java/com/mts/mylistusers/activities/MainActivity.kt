@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mts.mylistusers.R
 import com.mts.mylistusers.adapter.ItemsAdapter
+import com.mts.mylistusers.model.interactors.items.GetItemsInteractor
+import com.mts.mylistusers.mvi.items.ItemsState
+import com.mts.mylistusers.mvi.items.ItemsViewModel
 import com.mts.mylistusers.services.ForegroundService
 import com.mts.mylistusers.viewModels.MainViewModel
 
@@ -19,15 +22,21 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var adapter:ItemsAdapter
 
-    private val viewModel:MainViewModel by lazy {
-        MainViewModel()
+    private val viewModel:ItemsViewModel by lazy {
+       ItemsViewModel(
+           interactors = setOf(
+               GetItemsInteractor()
+           )
+       )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel.liveItems.observe(this@MainActivity, Observer { adapter.submitList(it) })
+       // viewModel.liveItems.observe(this@MainActivity, Observer { adapter.submitList(it) })
+        viewModel.state.observe(this, ::displayInfo)
+        viewModel.loadItems()
         startApplication()
     }
 
@@ -42,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
             infoIntent.putExtra(PUT_ID_NAME, it.id)
 
-           viewModel.saveItemId(it.id)
+           //viewModel.saveItemId(it.id)
 
             this.startActivity(infoIntent)
         }
@@ -54,6 +63,10 @@ class MainActivity : AppCompatActivity() {
         val startServiceIntent = Intent(baseContext, ForegroundService::class.java)
         ContextCompat.startForegroundService(baseContext, startServiceIntent)
 
+    }
+
+    private fun displayInfo(newState: ItemsState) {
+        adapter.submitList(newState.items)
     }
 
 }
