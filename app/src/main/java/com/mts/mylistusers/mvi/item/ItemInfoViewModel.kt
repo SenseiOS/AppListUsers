@@ -14,7 +14,7 @@ class ItemInfoViewModel (
     reducer = ItemInfoReducer(itemId)
 ) {
 
-    fun loadItems() {
+    fun loadItem() {
         action(ItemInfoAction.LoadItem)
     }
 }

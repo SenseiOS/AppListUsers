@@ -5,16 +5,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mts.mylistusers.R
 import com.mts.mylistusers.adapter.ItemsAdapter
 import com.mts.mylistusers.model.interactors.items.GetItemsInteractor
+import com.mts.mylistusers.model.interactors.items.SetLastId
 import com.mts.mylistusers.mvi.items.ItemsState
 import com.mts.mylistusers.mvi.items.ItemsViewModel
 import com.mts.mylistusers.services.ForegroundService
-import com.mts.mylistusers.viewModels.MainViewModel
 
 private const val PUT_ID_NAME = "id"
 
@@ -25,7 +24,8 @@ class MainActivity : AppCompatActivity() {
     private val viewModel:ItemsViewModel by lazy {
        ItemsViewModel(
            interactors = setOf(
-               GetItemsInteractor()
+               GetItemsInteractor(),
+               SetLastId()
            )
        )
     }
@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-       // viewModel.liveItems.observe(this@MainActivity, Observer { adapter.submitList(it) })
         viewModel.state.observe(this, ::displayInfo)
         viewModel.loadItems()
         startApplication()
@@ -51,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
             infoIntent.putExtra(PUT_ID_NAME, it.id)
 
-           //viewModel.saveItemId(it.id)
+            viewModel.saveLastId(it.id)
 
             this.startActivity(infoIntent)
         }

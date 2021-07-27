@@ -8,5 +8,6 @@ sealed class ItemsAction {
     object None: ItemsAction()
     object LoadItems: ItemsAction()
     data class ItemsLoaded(val items: List<Item>): ItemsAction()
+    data class SaveLastID(val lastId:Int) : ItemsAction()
     data class Error(val error: Exception): ItemsAction()
 }

@@ -13,4 +13,8 @@ class ItemsViewModel(
     fun loadItems() {
         action(ItemsAction.LoadItems)
     }
+
+    fun saveLastId(id:Int){
+        action(ItemsAction.SaveLastID(lastId = id))
+    }
 }
