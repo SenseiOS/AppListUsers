@@ -11,16 +11,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mts.mylistusers.R
 import com.mts.mylistusers.adapter.ItemsAdapter
 import com.mts.mylistusers.services.ForegroundService
+import com.mts.mylistusers.utils.createViewModel
 import com.mts.mylistusers.viewModels.MainViewModel
 
 private const val PUT_ID_NAME = "id"
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var adapter:ItemsAdapter
+    lateinit var adapter: ItemsAdapter
 
-    private val viewModel:MainViewModel by lazy {
-        MainViewModel()
+    private val viewModel: MainViewModel by lazy {
+        createViewModel {
+            MainViewModel()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,13 +45,13 @@ class MainActivity : AppCompatActivity() {
 
             infoIntent.putExtra(PUT_ID_NAME, it.id)
 
-           viewModel.saveItemId(it.id)
+            viewModel.saveItemId(it.id)
 
             this.startActivity(infoIntent)
         }
 
-        rvItems.layoutManager=LinearLayoutManager(this)
-        rvItems.adapter=adapter
+        rvItems.layoutManager = LinearLayoutManager(this)
+        rvItems.adapter = adapter
 
 
         val startServiceIntent = Intent(baseContext, ForegroundService::class.java)
