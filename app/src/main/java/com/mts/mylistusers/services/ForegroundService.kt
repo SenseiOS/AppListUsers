@@ -7,7 +7,7 @@ import androidx.core.app.NotificationCompat
 import com.mts.mylistusers.R
 
 private const val CHANNEL_ID = "ForegroundService"
-private const val NAME_CTION = "com.example.broadcast.MY_NOTIFICATION"
+private const val NAME_ACTION = "com.example.broadcast.MY_NOTIFICATION"
 private const val NAME_PACKAGE = "com.mts.mylistusers"
 private const val NOTIFICATION_TITLE = "Kotlin service"
 private const val NOTIFICATION_TEXT = "Open last info user"
@@ -19,7 +19,7 @@ class ForegroundService: Service() {
         if (intent != null) {
 
             val notificationIntent = Intent().also { nIntent ->
-                nIntent.action = NAME_CTION
+                nIntent.action = NAME_ACTION
                 nIntent.`package` = NAME_PACKAGE
             }
 
