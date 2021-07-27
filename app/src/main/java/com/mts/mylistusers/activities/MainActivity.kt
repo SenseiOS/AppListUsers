@@ -14,6 +14,7 @@ import com.mts.mylistusers.model.interactors.items.SetLastId
 import com.mts.mylistusers.mvi.items.ItemsState
 import com.mts.mylistusers.mvi.items.ItemsViewModel
 import com.mts.mylistusers.services.ForegroundService
+import com.mts.mylistusers.utils.createViewModel
 
 private const val PUT_ID_NAME = "id"
 
@@ -22,12 +23,13 @@ class MainActivity : AppCompatActivity() {
     lateinit var adapter:ItemsAdapter
 
     private val viewModel:ItemsViewModel by lazy {
-       ItemsViewModel(
-           interactors = setOf(
-               GetItemsInteractor(),
-               SetLastId()
+        createViewModel {
+            ItemsViewModel(
+                interactors = setOf(
+                    GetItemsInteractor(),
+                    SetLastId()
            )
-       )
+       )}
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

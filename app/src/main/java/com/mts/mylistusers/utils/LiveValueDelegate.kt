@@ -1,4 +1,4 @@
-package com.mts.mylistusers.model
+package com.mts.mylistusers.utils
 
 import androidx.lifecycle.MutableLiveData
 import com.mts.mylistusers.viewModels.BaseViewModel

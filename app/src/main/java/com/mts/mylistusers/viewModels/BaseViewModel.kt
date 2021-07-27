@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mts.mylistusers.interfaces.Interactor
 import com.mts.mylistusers.interfaces.Reducer
-import com.mts.mylistusers.model.delegate
+import com.mts.mylistusers.utils.delegate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

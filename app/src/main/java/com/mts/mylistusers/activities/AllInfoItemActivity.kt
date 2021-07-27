@@ -7,6 +7,7 @@ import com.mts.mylistusers.*
 import com.mts.mylistusers.model.interactors.item.GetItemInfoInteractor
 import com.mts.mylistusers.mvi.item.ItemInfoState
 import com.mts.mylistusers.mvi.item.ItemInfoViewModel
+import com.mts.mylistusers.utils.createViewModel
 
 
 private const val DEFAULT_NUMBER_ID = 0
@@ -19,12 +20,14 @@ class AllInfoItemActivity : AppCompatActivity() {
     private lateinit var descriptionTextView:TextView
 
     private val viewModel:ItemInfoViewModel by lazy {
-        ItemInfoViewModel(
-            interactors = setOf(
-                GetItemInfoInteractor()
-            ),
-            itemId = itemId
-        )
+        createViewModel {
+            ItemInfoViewModel(
+                interactors = setOf(
+                    GetItemInfoInteractor()
+                ),
+                itemId = itemId
+            )
+        }
     }
     private val itemId by lazy {
         intent.getIntExtra(GET_NAME_ID, DEFAULT_NUMBER_ID)
