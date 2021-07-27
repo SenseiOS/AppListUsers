@@ -5,12 +5,12 @@ import androidx.lifecycle.ViewModel
 import com.mts.mylistusers.model.Item
 import com.mts.mylistusers.model.Items
 
-class AllInfoItemViewModel:ViewModel() {
+class AllInfoItemViewModel : ViewModel() {
 
-   val item:MutableLiveData<Item> = MutableLiveData()
+    val item: MutableLiveData<Item> = MutableLiveData()
 
 
-    fun getItem(id:Int) {
+    fun getItem(id: Int) {
         Items.getItem(id)?.let {
             item?.value = it
         }
